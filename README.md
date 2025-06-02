@@ -1,0 +1,1 @@
+# Slovo_po_kartinke
