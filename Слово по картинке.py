@@ -196,13 +196,12 @@ class MainMenuWidget(QtWidgets.QWidget):
         self.musicButton.setText("🔇" if is_playing else "♪")
 
     def retranslate_ui(self):
-        _translate = QtCore.QCoreApplication.translate
-        self.label.setText(_translate("MainMenu", "Слово по картинке"))
-        self.startButton.setText(_translate("MainMenu", "Начать"))
-        self.rulesButton.setText(_translate("MainMenu", "Правила игры"))
+        self.label.setText("Слово по картинке")
+        self.startButton.setText("Начать")
+        self.rulesButton.setText("Правила игры")
         self.musicButton.setText("♪")
-        self.recordsButton.setText(_translate("MainMenu", "Рекорды"))
-        self.exitButton.setText(_translate("MainMenu", "Выход"))
+        self.recordsButton.setText("Рекорды")
+        self.exitButton.setText("Выход")
 
 
 class RecordsWidget(QtWidgets.QWidget):
@@ -212,17 +211,17 @@ class RecordsWidget(QtWidgets.QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(100, 50, 100, 50)
+        self.setGeometry(0, 0, 1920, 1080)
 
-        self.titleLabel = QtWidgets.QLabel()
+        self.titleLabel = QtWidgets.QLabel(self)
+        self.titleLabel.setGeometry(QtCore.QRect(0, 50, 1920, 100))
         font = QtGui.QFont()
         font.setPointSize(36)
         self.titleLabel.setFont(font)
         self.titleLabel.setAlignment(QtCore.Qt.AlignCenter)
-        layout.addWidget(self.titleLabel)
 
-        self.recordsTable = QtWidgets.QTableWidget()
+        self.recordsTable = QtWidgets.QTableWidget(self)
+        self.recordsTable.setGeometry(QtCore.QRect(100, 200, 1720, 700))
         self.recordsTable.setColumnCount(3)
         self.recordsTable.setHorizontalHeaderLabels(["Место", "Никнейм", "Общее время"])
 
@@ -250,31 +249,20 @@ class RecordsWidget(QtWidgets.QWidget):
         self.recordsTable.verticalHeader().setDefaultSectionSize(60)
         self.recordsTable.verticalHeader().setVisible(False)
 
-        layout.addWidget(self.recordsTable, stretch=1)
-
-        bottom_layout = QtWidgets.QHBoxLayout()
-        bottom_layout.setContentsMargins(0, 20, 0, 0)
-
-        self.musicButton = QtWidgets.QPushButton()
-        self.musicButton.setFixedSize(120, 120)
+        self.musicButton = QtWidgets.QPushButton(self)
+        self.musicButton.setGeometry(QtCore.QRect(50, 950, 120, 120))
         font = QtGui.QFont()
         font.setPointSize(36)
         self.musicButton.setFont(font)
         self.musicButton.setCheckable(True)
         self.musicButton.setStyleSheet("QPushButton {border: none;}")
-        bottom_layout.addWidget(self.musicButton)
 
-        bottom_layout.addStretch()
-
-        self.menuButton = QtWidgets.QPushButton("Меню")
-        self.menuButton.setFixedSize(120, 120)
+        self.menuButton = QtWidgets.QPushButton("Меню", self)
+        self.menuButton.setGeometry(QtCore.QRect(1750, 950, 120, 120))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.menuButton.setFont(font)
-        bottom_layout.addWidget(self.menuButton)
-
-        layout.addLayout(bottom_layout)
 
         self.parent.music_manager.add_listener(self)
         self.musicButton.setChecked(False)
@@ -321,8 +309,7 @@ class RecordsWidget(QtWidgets.QWidget):
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
     def retranslate_ui(self):
-        _translate = QtCore.QCoreApplication.translate
-        self.titleLabel.setText(_translate("RecordsWindow", "Таблица рекордов"))
+        self.titleLabel.setText("Таблица рекордов")
 
 
 class RulesDialogWidget(QtWidgets.QWidget):
@@ -332,10 +319,10 @@ class RulesDialogWidget(QtWidgets.QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(200, 100, 200, 100)
+        self.setGeometry(0, 0, 1920, 1080)
 
-        self.label = QtWidgets.QLabel()
+        self.label = QtWidgets.QLabel(self)
+        self.label.setGeometry(QtCore.QRect(0, 100, 1920, 100))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(48)
@@ -343,40 +330,38 @@ class RulesDialogWidget(QtWidgets.QWidget):
         font.setWeight(75)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
-        layout.addWidget(self.label)
 
-        self.label_2 = QtWidgets.QLabel()
+        self.label_2 = QtWidgets.QLabel(self)
+        self.label_2.setGeometry(QtCore.QRect(200, 250, 1520, 600))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.label_2.setFont(font)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setWordWrap(True)
-        layout.addWidget(self.label_2)
 
-        self.okButton = QtWidgets.QPushButton()
-        self.okButton.setFixedSize(200, 100)
+        self.okButton = QtWidgets.QPushButton(self)
+        self.okButton.setGeometry(QtCore.QRect(860, 800, 200, 100))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.okButton.setFont(font)
-        layout.addWidget(self.okButton, alignment=QtCore.Qt.AlignCenter)
 
         self.retranslate_ui()
 
         self.okButton.clicked.connect(self.parent.show_main_menu)
 
     def retranslate_ui(self):
-        _translate = QtCore.QCoreApplication.translate
-        self.label.setText(_translate("RulesDialog", "Правила игры"))
-        self.label_2.setText(_translate("RulesDialog",
-                                        "<html><head/><body><p>На экране появляется изображение, которое связано с загаданным словом.</p>"
-                                        "<p>Игроку следует внимательно посмотреть на изображение и попытаться определить какое слово оно может представлять.</p>"
-                                        "<p>После того как игрок ввел слово с клавиатуры в специальное поле, он нажимает Enter.</p>"
-                                        "<p>Если слово правильное, он переходит к следующему уровню.</p>"
-                                        "<p>Если слово неправильное, на экране появляется ошибка, и игрок может попробовать снова.</p>"
-                                        "<p>В конце игры игроку предлагается ввести свой ник для сохранения в таблицу рекордов.</p>"
-                                        "</body></html>"))
-        self.okButton.setText(_translate("RulesDialog", "Ок"))
+        self.label.setText("Правила игры")
+        self.label_2.setText(
+            "<html><head/><body><p>На экране появляется изображение, которое связано с загаданным словом.</p>"
+            "<p>Игроку следует внимательно посмотреть на изображение и попытаться определить какое слово оно может представлять.</p>"
+            "<p>После того как игрок ввел слово с клавиатуры в специальное поле, он нажимает Enter.</p>"
+            "<p>Если слово правильное, он переходит к следующему уровню.</p>"
+            "<p>Если слово неправильное, на экране появляется ошибка, и игрок может попробовать снова.</p>"
+            "<p>В конце игры игроку предлагается ввести свой ник для сохранения в таблицу рекордов.</p>"
+            "</body></html>"
+        )
+        self.okButton.setText("Ок")
 
 
 class LevelWidget(QtWidgets.QWidget):
@@ -389,61 +374,45 @@ class LevelWidget(QtWidgets.QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(100, 50, 100, 50)
+        self.setGeometry(0, 0, 1920, 1080)
 
-        top_layout = QtWidgets.QHBoxLayout()
-
-        self.pauseButton = QtWidgets.QPushButton("Пауза")
-        self.pauseButton.setFixedSize(120, 120)
+        self.pauseButton = QtWidgets.QPushButton("Пауза", self)
+        self.pauseButton.setGeometry(QtCore.QRect(50, 50, 120, 120))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.pauseButton.setFont(font)
-        top_layout.addWidget(self.pauseButton)
 
-        top_layout.addStretch()
-
-        self.timerLabel = QtWidgets.QLabel("00:00:00")
+        self.timerLabel = QtWidgets.QLabel("00:00:00", self)
+        self.timerLabel.setGeometry(QtCore.QRect(800, 50, 1900, 120))
         self.timerLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.timerLabel.setStyleSheet("font-size: 36px; font-weight: bold;")
-        top_layout.addWidget(self.timerLabel)
 
-        layout.addLayout(top_layout)
-
-        self.imageLabel = QtWidgets.QLabel()
+        self.imageLabel = QtWidgets.QLabel(self)
+        self.imageLabel.setGeometry(QtCore.QRect(460, 200, 1000, 600))
         self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.imageLabel.setStyleSheet("background-color: transparent; border: none;")
-        layout.addWidget(self.imageLabel, stretch=1)
 
-        self.wordInput = QtWidgets.QLineEdit()
+        self.wordInput = QtWidgets.QLineEdit(self)
+        self.wordInput.setGeometry(QtCore.QRect(560, 850, 800, 80))
         self.wordInput.setStyleSheet("font-size: 36px;")
         self.wordInput.setAlignment(QtCore.Qt.AlignCenter)
         self.wordInput.returnPressed.connect(self.check_answer)
-        layout.addWidget(self.wordInput)
 
-        bottom_layout = QtWidgets.QHBoxLayout()
-
-        self.musicButton = QtWidgets.QPushButton()
-        self.musicButton.setFixedSize(120, 120)
+        self.musicButton = QtWidgets.QPushButton(self)
+        self.musicButton.setGeometry(QtCore.QRect(50, 950, 120, 120))
         font = QtGui.QFont()
         font.setPointSize(36)
         self.musicButton.setFont(font)
         self.musicButton.setCheckable(True)
         self.musicButton.setStyleSheet("QPushButton {border: none;}")
-        bottom_layout.addWidget(self.musicButton)
 
-        bottom_layout.addStretch()
-
-        self.menuButton = QtWidgets.QPushButton("Меню")
-        self.menuButton.setFixedSize(120, 120)
+        self.menuButton = QtWidgets.QPushButton("Меню", self)
+        self.menuButton.setGeometry(QtCore.QRect(1750, 950, 120, 120))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(24)
         self.menuButton.setFont(font)
-        bottom_layout.addWidget(self.menuButton)
-
-        layout.addLayout(bottom_layout)
 
         self.parent.music_manager.add_listener(self)
         self.musicButton.setChecked(False)
